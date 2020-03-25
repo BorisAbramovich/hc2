@@ -23,3 +23,9 @@ class Order(object):
 
     def get_id(self):
         return self.id
+
+    def total_weight(self, product_weights):
+        tot = 0
+        for prod, cnt in self.list_of_missing_products.items():
+            tot += cnt * product_weights[prod]
+        return tot

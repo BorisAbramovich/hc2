@@ -34,22 +34,33 @@ def main():
                         for w in warehouse_lst:
                             # print(w)
                             if w.list_of_products[prod_idx] > 0:
-                                quantity = min(
-                                    [
-                                        w.list_of_products[prod_idx],
-                                        order.list_of_missing_products[prod_idx],
-                                        input_data.max_load // product.weight
-                                    ]
-                                )
-                                turns1 = drone.load(w, product, quantity)
-                                w.give_items(prod_idx, quantity)
-                                order.supply(product, quantity)
-                                turns2 = drone.deliver(order=order, product=product, number_of_products=quantity)
+                                turns1 = 0
+                                for specific_prod_idx in order.list_of_missing_products:
+                                    product_spec = Product(specific_prod_idx, input_data.weights[specific_prod_idx])
+                                    quantity = min(
+                                        [
+                                            w.list_of_products[specific_prod_idx],
+                                            order.list_of_missing_products[specific_prod_idx],
+                                            (input_data.max_load - drone.current_load) // product_spec.weight
+                                        ]
+                                    )
+                                    if quantity > 0:
+                                        order.supply(product_spec, quantity)
+                                        turns1 += drone.load(w, product_spec, quantity)
+                                        w.give_items(specific_prod_idx, quantity)
+                                turns2 = 0
+                                for idx, quan in enumerate(drone.list_of_products):
+                                    if quan > 0:
+                                        product_spec = Product(idx, input_data.weights[idx])
+                                        turns2 += drone.deliver(
+                                            order=order, product=product_spec, number_of_products=quan)
+
                                 if t + turns1 + turns2 < input_data.deadline:
-                                    available_drones[t + turns1 + turns2].append(d)
+                                        available_drones[t + turns1 + turns2].append(d)
                                 elif t + turns1 + turns2 > input_data.deadline:
                                     drone.list_of_commands = drone.list_of_commands[:-1]
                                 used_drone = True
+
                                 break
             for order in input_data.orders:
                 order.clean()
