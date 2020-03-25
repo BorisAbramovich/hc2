@@ -12,19 +12,19 @@ def main():
     input_data = InputData._from_text(read(os.path.join(PROJECT_DIR, 'input_files', name)))
     available_drones = [[] for _ in range(input_data.deadline)]
     available_drones[0] = [i for i in range(input_data.drones_count)]
-    for order in input_data.orders:
-        print(order)
+    # for order in input_data.orders:
+    #     print(order)
     for t in range(input_data.deadline):
         for d in available_drones[t]:
             drone = input_data.drones[d]
             for order in input_data.orders:
                 for prod_idx in order.list_of_missing_products:
-                    print('order' + str(order))
-                    print('product' + str(prod_idx))
+                    # print('order' + str(order))
+                    # print('product' + str(prod_idx))
                     if order.list_of_missing_products[prod_idx] > 0:
                         product = Product(prod_idx, input_data.weights[prod_idx])
                         for w in input_data.warehouses:
-                            print(w)
+                            # print(w)
                             if w.list_of_products[prod_idx] > 0:
                                 quantity = min(
                                     [

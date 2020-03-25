@@ -10,7 +10,7 @@ from math import factorial
 from basics.itertools import indexify_no_args
 
 try:
-    from math import gcd as _gcd
+    from math_name import gcd as _gcd
 except ImportError:
     from fractions import gcd as _gcd
 
