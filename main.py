@@ -7,7 +7,7 @@ import os.path
 
 
 def main():
-    path = 'example.in'
+    path = 'mother_of_all_warehouses.in'
     name = os.path.basename(path)
     input_data = InputData._from_text(read(os.path.join(PROJECT_DIR, 'input_files', name)))
     available_drones = [[] for _ in range(input_data.deadline)]
@@ -21,7 +21,13 @@ def main():
                         product = Product(prod_idx, input_data.weights[prod_idx])
                         for w in input_data.warehouses:
                             if w.list_of_products[prod_idx] > 0:
-                                quantity = min(w.list_of_products[prod_idx], order.list_of_missing_products[prod_idx])
+                                quantity = min(
+                                    [
+                                        w.list_of_products[prod_idx],
+                                        order.list_of_missing_products[prod_idx],
+                                        input_data.max_load // product.weight
+                                    ]
+                                )
                                 turns1 = drone.load(w, product, quantity)
                                 w.give_items(prod_idx, quantity)
                                 order.supply(product, quantity)
