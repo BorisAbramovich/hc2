@@ -7,7 +7,7 @@ import os.path
 
 
 def main():
-    path = 'redundancy.in'
+    path = 'mother_of_all_warehouses.in'
     name = os.path.basename(path)
     input_data = InputData._from_text(read(os.path.join(PROJECT_DIR, 'input_files', name)))
     available_drones = [[] for _ in range(input_data.deadline)]
@@ -48,7 +48,7 @@ def main():
                                     drone.list_of_commands = drone.list_of_commands[:-1]
                                 used_drone = True
                                 break
-            if not used_drone:
+            if not used_drone and t < input_data.deadline - 1:
                 available_drones[t+1].append(d)
 
     out_stream = ""
