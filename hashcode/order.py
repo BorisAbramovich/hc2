@@ -9,8 +9,8 @@ class Order(object):
         self.id = id
 
     def supply(self, product, num_of_items):
-        self.list_of_missing_products[product.get_id()] -= num_of_items
-        assert self.list_of_missing_products[product.get_id()] >= 0
+        self.list_of_missing_products[product.type_id] -= num_of_items
+        assert self.list_of_missing_products[product.type_id] >= 0
 
     def get_id(self):
         return self.id
