@@ -1,5 +1,5 @@
 from hashcode.output import write_output
-from hashcode.input_data import Solution
+from hashcode.input_data import InputData
 from basics import read
 import os.path
 
