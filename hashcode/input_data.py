@@ -5,7 +5,7 @@ from hashcode.warehouse import Warehouse
 from hashcode.order import Order
 from hashcode.drone import Drone
 
-from basics.io import InputReader
+from basics.io_name import InputReader
 
 
 class InputData(object):
@@ -45,7 +45,7 @@ class InputData(object):
             row, col = inp.ints(2)
             items_cnt = inp.ints(1)[0]
             items_quantities = inp.ints(items_cnt)
-            items = [items_quantities.count(i) for i in range(product_types)]
+            items = {i: items_quantities.count(i) for i in range(product_types) if items_quantities.count(i) != 0}
             orders.append(Order(id=order, destination=Location(row, col), product_quantities=items))
 
         return cls(rows, cols, drones, deadline, max_load, product_types, weights,

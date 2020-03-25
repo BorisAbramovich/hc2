@@ -4,7 +4,7 @@ import string as _string
 import logging as _logging
 import operator as _operator
 
-from basics.io import read, InputReader, write_lines
+from basics.io_name import read, InputReader, write_lines
 
 _logger = _logging.getLogger(__name__)
 

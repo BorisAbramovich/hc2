@@ -8,6 +8,9 @@ class Order(object):
         self.list_of_missing_products = product_quantities
         self.id = id
 
+    def __str__(self):
+        return 'order_id=' + str(self.id) + ' missing_list' + str(self.list_of_missing_products)
+
     def supply(self, product, num_of_items):
         self.list_of_missing_products[product.type_id] -= num_of_items
         assert self.list_of_missing_products[product.type_id] >= 0

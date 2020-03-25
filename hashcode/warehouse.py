@@ -8,6 +8,9 @@ class Warehouse(object):
         self.loc = location
         self.list_of_products = list_of_products
 
+    def __str__(self):
+       return 'Warehouse' + str(self.id) + ' in ' + str(self.loc)
+
     def get_id(self):
         return self.id
 

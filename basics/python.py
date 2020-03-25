@@ -6,7 +6,7 @@ import enum as _enum
 import inspect as _inspect
 import logging as _logging
 import functools as _functools
-import six as _six
+#import six as _six
 
 try:
     import copyreg as _copyreg
