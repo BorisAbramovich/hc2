@@ -7,7 +7,7 @@ import os.path
 
 
 def main():
-    path = 'mother_of_all_warehouses.in'
+    path = 'redundancy.in'
     name = os.path.basename(path)
     input_data = InputData._from_text(read(os.path.join(PROJECT_DIR, 'input_files', name)))
     available_drones = [[] for _ in range(input_data.deadline)]
