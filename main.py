@@ -24,6 +24,7 @@ def main():
                                 quantity = min(w.list_of_products[prod_idx], order.list_of_missing_products[prod_idx])
                                 turns1 = drone.load(w, product, quantity)
                                 w.give_items(prod_idx, quantity)
+                                order.supply(product, quantity)
                                 turns2 = drone.deliver(order=order, product=product, number_of_products=quantity)
                                 if t + turns1 + turns2 < input_data.deadline:
                                     available_drones[t + turns1 + turns2].append(d)
@@ -35,6 +36,9 @@ def main():
         out_stream += "".join(commands)
         count += len(commands)
     out_stream = str(count) + "\n" + out_stream
+    out_path = os.path.join(PROJECT_DIR, 'outputs', name[:-3] + '.out')
+    with open(out_path, 'w+') as out_file:
+        out_file.write(out_stream)
     return out_stream
 
 
