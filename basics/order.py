@@ -8,4 +8,4 @@ class order:
 
     def supply(self, product, num_of_items):
         self.list_of_missing_products[product.get_id()] -= num_of_items
-        assert  self.list_of_missing_products[product.get_id()] >= 0
+        assert self.list_of_missing_products[product.get_id()] >= 0
