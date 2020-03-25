@@ -1,4 +1,4 @@
-from location import Location
+from hashcode.location import Location
 
 
 class Warehouse(object):
