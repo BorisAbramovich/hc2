@@ -16,12 +16,17 @@ def main():
     #     print(order)
     for t in range(input_data.deadline):
         for d in available_drones[t]:
+            used_drone = False
             drone = input_data.drones[d]
             for order in input_data.orders:
+                if used_drone:
+                    break
                 for prod_idx in order.list_of_missing_products:
+                    if used_drone:
+                        break
                     # print('order' + str(order))
                     # print('product' + str(prod_idx))
-                    if order.list_of_missing_products[prod_idx] > 0:
+                    if (not used_drone) and order.list_of_missing_products[prod_idx] > 0:
                         product = Product(prod_idx, input_data.weights[prod_idx])
                         for w in input_data.warehouses:
                             # print(w)
@@ -39,7 +44,12 @@ def main():
                                 turns2 = drone.deliver(order=order, product=product, number_of_products=quantity)
                                 if t + turns1 + turns2 < input_data.deadline:
                                     available_drones[t + turns1 + turns2].append(d)
+                                elif t + turns1 + turns2 > input_data.deadline:
+                                    drone.list_of_commands = drone.list_of_commands[:-1]
+                                used_drone = True
                                 break
+            if not used_drone:
+                available_drones[t+1].append(d)
 
     out_stream = ""
     count = 0
