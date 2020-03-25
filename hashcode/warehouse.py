@@ -1,11 +1,15 @@
-from location import Location
+from hashcode.location import Location
 
 
 class Warehouse(object):
 
-    def __init__(self, location: Location, list_of_products):
+    def __init__(self, id, location: Location, list_of_products):
+        self.id = id
         self.loc = location
         self.list_of_products = list_of_products
+
+    def get_id(self):
+        return self.id
 
     def get_items(self, product_type, number_of_products):
         self.list_of_products[product_type] += number_of_products

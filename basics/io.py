@@ -1,8 +1,5 @@
 from __future__ import absolute_import
 
-import io as _io
-import csv as _csv
-
 
 def read(path, mode='r'):
     """
@@ -35,51 +32,6 @@ def write_lines(lines, path):
     Writes the lines to a file.
     """
     write('\n'.join(lines), path)
-
-
-def csv_to_list(csv_string):
-    r"""
-    Parses a csv string into a list of lists of strings.
-
-    >>> csv_to_list("a,b\r\n1,2\r\n")
-    [['a', 'b'], ['1', '2']]
-    """
-    return list(_csv.reader(_io.StringIO(csv_string)))
-
-
-def list_to_csv(rows):
-    r"""
-    Creates a csv string from given rows of values..
-
-    Args:
-        rows: An iterable of rows. Each row is an iterable of values.
-
-    >>> list_to_csv([['a', 'b'], ['1', '2']])
-    'a,b\r\n1,2\r\n'
-    """
-    out = _io.StringIO()
-    _csv.writer(out).writerows(rows)
-    return out.getvalue()
-
-
-def csv_file_to_list(path):
-    """
-    Parses a csv file into a list of rows.
-    """
-    with open(path, newline='') as f:
-        return list(_csv.reader(f))
-
-
-def list_to_csv_file(rows, path):
-    """
-    Writes given data to a csv file.
-
-    Args:
-        rows: An iterable of rows. Each row is an iterable of values.
-        path: Path to the csv file to save to.
-    """
-    with open(path, 'w', newline='') as f:
-        _csv.writer(f).writerows(rows)
 
 
 class InputReader(object):
