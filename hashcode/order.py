@@ -15,5 +15,11 @@ class Order(object):
         self.list_of_missing_products[product.type_id] -= num_of_items
         assert self.list_of_missing_products[product.type_id] >= 0
 
+    def clean(self):
+        keys = list(self.list_of_missing_products.keys())
+        for k in keys:
+            if self.list_of_missing_products[k] == 0:
+                del self.list_of_missing_products[k]
+
     def get_id(self):
         return self.id

@@ -1,5 +1,5 @@
 from hashcode import PROJECT_DIR
-from hashcode.output import write_output
+from hashcode.location import dist
 from hashcode.product import Product
 from hashcode.input_data import InputData
 from basics import read
@@ -7,13 +7,14 @@ import os.path
 
 
 def main():
-    path = 'mother_of_all_warehouses.in'
+    path = 'redundancy.in'
     name = os.path.basename(path)
     input_data = InputData._from_text(read(os.path.join(PROJECT_DIR, 'input_files', name)))
     available_drones = [[] for _ in range(input_data.deadline)]
     available_drones[0] = [i for i in range(input_data.drones_count)]
     # for order in input_data.orders:
     #     print(order)
+    input_data.orders = sorted(input_data.orders, key=lambda o: sum(o.list_of_missing_products.values()))
     for t in range(input_data.deadline):
         for d in available_drones[t]:
             used_drone = False
@@ -28,7 +29,8 @@ def main():
                     # print('product' + str(prod_idx))
                     if (not used_drone) and order.list_of_missing_products[prod_idx] > 0:
                         product = Product(prod_idx, input_data.weights[prod_idx])
-                        for w in input_data.warehouses:
+                        warehouse_lst = sorted(input_data.warehouses, key=lambda w: dist(w.loc, drone.loc))
+                        for w in warehouse_lst:
                             # print(w)
                             if w.list_of_products[prod_idx] > 0:
                                 quantity = min(
@@ -48,6 +50,10 @@ def main():
                                     drone.list_of_commands = drone.list_of_commands[:-1]
                                 used_drone = True
                                 break
+            for order in input_data.orders:
+                order.clean()
+            input_data.orders = [o for o in input_data.orders if len(o.list_of_missing_products) >0]
+            input_data.orders = sorted(input_data.orders, key=lambda o: sum(o.list_of_missing_products.values()))
             if not used_drone and t < input_data.deadline - 1:
                 available_drones[t+1].append(d)
 
