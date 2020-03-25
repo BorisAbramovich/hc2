@@ -29,7 +29,8 @@ def main():
                     # print('product' + str(prod_idx))
                     if (not used_drone) and order.list_of_missing_products[prod_idx] > 0:
                         product = Product(prod_idx, input_data.weights[prod_idx])
-                        warehouse_lst = sorted(input_data.warehouses, key=lambda w: dist(w.loc, drone.loc))
+                        warehouse_lst = sorted(input_data.warehouses,
+                                               key=lambda w: dist(w.loc, drone.loc) + dist(w.loc, order.destination))
                         for w in warehouse_lst:
                             # print(w)
                             if w.list_of_products[prod_idx] > 0:
