@@ -1,8 +1,10 @@
-class Warehouse(self):
+from location import Location
 
-    def __init__(self, loc_x, loc_y, list_of_products):
-        self.loc_x = loc_x
-        self.loc_y = loc_y
+
+class Warehouse(object):
+
+    def __init__(self, location: Location, list_of_products):
+        self.loc = location
         self.list_of_products = list_of_products
 
     def get_items(self, product_type, number_of_products):
