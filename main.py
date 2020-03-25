@@ -39,6 +39,7 @@ def main():
                                 turns2 = drone.deliver(order=order, product=product, number_of_products=quantity)
                                 if t + turns1 + turns2 < input_data.deadline:
                                     available_drones[t + turns1 + turns2].append(d)
+                                break
 
     out_stream = ""
     count = 0
